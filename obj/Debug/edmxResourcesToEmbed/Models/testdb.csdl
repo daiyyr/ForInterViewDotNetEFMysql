@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="testdbEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="class" EntityType="testdbModel.class" />
+    <EntitySet Name="student" EntityType="testdbModel.student" />
+    <EntitySet Name="sxc" EntityType="testdbModel.sxc" />
+    <AssociationSet Name="cla" Association="testdbModel.cla">
+      <End Role="class" EntitySet="class" />
+      <End Role="sxc" EntitySet="sxc" />
+    </AssociationSet>
+    <AssociationSet Name="stu" Association="testdbModel.stu">
+      <End Role="student" EntitySet="student" />
+      <End Role="sxc" EntitySet="sxc" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="class">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="sxc" Relationship="testdbModel.cla" FromRole="class" ToRole="sxc" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="dob" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="sxc" Relationship="testdbModel.stu" FromRole="student" ToRole="sxc" />
+  </EntityType>
+  <EntityType Name="sxc">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="student_id" Type="Int32" Nullable="false" />
+    <Property Name="class_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="class" Relationship="testdbModel.cla" FromRole="sxc" ToRole="class" />
+    <NavigationProperty Name="student" Relationship="testdbModel.stu" FromRole="sxc" ToRole="student" />
+  </EntityType>
+  <Association Name="cla">
+    <End Role="class" Type="testdbModel.class" Multiplicity="1" />
+    <End Role="sxc" Type="testdbModel.sxc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="class">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sxc">
+        <PropertyRef Name="class_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="stu">
+    <End Role="student" Type="testdbModel.student" Multiplicity="1" />
+    <End Role="sxc" Type="testdbModel.sxc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sxc">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

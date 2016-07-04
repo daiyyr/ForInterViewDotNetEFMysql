@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testdbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="testdbModelStoreContainer">
+    <EntitySet Name="class" EntityType="testdbModel.Store.class" store:Type="Tables" Schema="testdb" />
+    <EntitySet Name="student" EntityType="testdbModel.Store.student" store:Type="Tables" Schema="testdb" />
+    <EntitySet Name="sxc" EntityType="testdbModel.Store.sxc" store:Type="Tables" Schema="testdb" />
+    <AssociationSet Name="cla" Association="testdbModel.Store.cla">
+      <End Role="class" EntitySet="class" />
+      <End Role="sxc" EntitySet="sxc" />
+    </AssociationSet>
+    <AssociationSet Name="stu" Association="testdbModel.Store.stu">
+      <End Role="student" EntitySet="student" />
+      <End Role="sxc" EntitySet="sxc" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="class">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="description" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="dob" Type="date" />
+  </EntityType>
+  <EntityType Name="sxc">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="student_id" Type="int" Nullable="false" />
+    <Property Name="class_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="cla">
+    <End Role="class" Type="testdbModel.Store.class" Multiplicity="1" />
+    <End Role="sxc" Type="testdbModel.Store.sxc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="class">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sxc">
+        <PropertyRef Name="class_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="stu">
+    <End Role="student" Type="testdbModel.Store.student" Multiplicity="1" />
+    <End Role="sxc" Type="testdbModel.Store.sxc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sxc">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

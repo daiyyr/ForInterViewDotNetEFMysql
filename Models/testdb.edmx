@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="testdbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="testdbModelStoreContainer">
+          <EntitySet Name="class" EntityType="testdbModel.Store.class" store:Type="Tables" Schema="testdb" />
+          <EntitySet Name="student" EntityType="testdbModel.Store.student" store:Type="Tables" Schema="testdb" />
+          <EntitySet Name="sxc" EntityType="testdbModel.Store.sxc" store:Type="Tables" Schema="testdb" />
+          <AssociationSet Name="cla" Association="testdbModel.Store.cla">
+            <End Role="class" EntitySet="class" />
+            <End Role="sxc" EntitySet="sxc" />
+          </AssociationSet>
+          <AssociationSet Name="stu" Association="testdbModel.Store.stu">
+            <End Role="student" EntitySet="student" />
+            <End Role="sxc" EntitySet="sxc" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="dob" Type="date" />
+        </EntityType>
+        <EntityType Name="sxc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="class_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="cla">
+          <End Role="class" Type="testdbModel.Store.class" Multiplicity="1" />
+          <End Role="sxc" Type="testdbModel.Store.sxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sxc">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="stu">
+          <End Role="student" Type="testdbModel.Store.student" Multiplicity="1" />
+          <End Role="sxc" Type="testdbModel.Store.sxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sxc">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="testdbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="class" EntityType="testdbModel.class" />
+          <EntitySet Name="student" EntityType="testdbModel.student" />
+          <EntitySet Name="sxc" EntityType="testdbModel.sxc" />
+          <AssociationSet Name="cla" Association="testdbModel.cla">
+            <End Role="class" EntitySet="class" />
+            <End Role="sxc" EntitySet="sxc" />
+          </AssociationSet>
+          <AssociationSet Name="stu" Association="testdbModel.stu">
+            <End Role="student" EntitySet="student" />
+            <End Role="sxc" EntitySet="sxc" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="sxc" Relationship="testdbModel.cla" FromRole="class" ToRole="sxc" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="dob" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="sxc" Relationship="testdbModel.stu" FromRole="student" ToRole="sxc" />
+        </EntityType>
+        <EntityType Name="sxc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="class_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="class" Relationship="testdbModel.cla" FromRole="sxc" ToRole="class" />
+          <NavigationProperty Name="student" Relationship="testdbModel.stu" FromRole="sxc" ToRole="student" />
+        </EntityType>
+        <Association Name="cla">
+          <End Role="class" Type="testdbModel.class" Multiplicity="1" />
+          <End Role="sxc" Type="testdbModel.sxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sxc">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="stu">
+          <End Role="student" Type="testdbModel.student" Multiplicity="1" />
+          <End Role="sxc" Type="testdbModel.sxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sxc">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testdbModelStoreContainer" CdmEntityContainer="testdbEntities">
+          <EntitySetMapping Name="class">
+            <EntityTypeMapping TypeName="testdbModel.class">
+              <MappingFragment StoreEntitySet="class">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="student">
+            <EntityTypeMapping TypeName="testdbModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sxc">
+            <EntityTypeMapping TypeName="testdbModel.sxc">
+              <MappingFragment StoreEntitySet="sxc">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
