@@ -1,0 +1,52 @@
+﻿@model MvcApplication1.Models.student
+
+<h2 style="text-align:center">Modify</h2>
+<html>
+<head>
+    <title>Modify</title>
+    <style type="text/css">
+        #tblist {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tblist th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+                text-align:center;
+            }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Modify", "Home", FormMethod.Post))
+    {
+        <table id="tblist">
+            <tr>
+                <th>name @Html.HiddenFor(a => a.id)</th>
+                @*<td>@Html.TextBox("name",(Object)Model.name)</td>*@
+                <td>@Html.TextBoxFor(a=>a.name)</td>
+            </tr>
+            <tr>
+                <th>date of birth</th>
+                <td>@Html.TextBoxFor(a=>a.dob)</td>
+            </tr>
+            <tr>
+                <th>class</th>
+                @*<td>@Html.TextBox("class",(Object)(Model.sxc.Select(r => r.@class.name)))</td>*@
+
+                @*强类型,无法自动选中班级*@
+                @*<td>@Html.DropDownListFor(a=>(a.sxc.First().@class), ViewBag.classList as IEnumerable<SelectListItem>)</td>*@
+
+                <td>@Html.DropDownList("class", ViewBag.classList as IEnumerable<SelectListItem>)</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="submit" /> @Html.ActionLink("back","Index","Home")
+                </td>
+            </tr>
+        </table>
+    }
+</body>
+</html>

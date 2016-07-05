@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,29 +25,48 @@ namespace MvcApplication1.Controllers
         }
 
 
-        //
-        // GET: /Home/Create
-
         public ActionResult Create()
         {
-            return View();
+            student stu = new student();
+            //班级列表下拉框
+            IEnumerable<SelectListItem> listItem = from c in db.@class
+                                                   where c.id != null
+                                                   select new SelectListItem{
+                                                       Value = c.id.ToString(),
+                                                       Text = c.name,};
+
+            ViewBag.classList = listItem;
+            return View(stu);
         }
 
         //
         // POST: /Home/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(student model)
         {
+
+            db.student.Add(model);
             try
             {
-                // TODO: Add insert logic here
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Content("Modify failed. " + ex.Message);
+            }
 
+            int id = db.student.Select(p => p.id).Max();
+
+            db.sxc.Add(new sxc { student_id = id,  class_id = int.Parse(Request.Form["class"]) });
+            try
+            {
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Content("Modify failed. " + ex.Message);
             }
         }
 
@@ -54,24 +75,51 @@ namespace MvcApplication1.Controllers
         [HttpGet]
         public ActionResult Modify(int id)
         {
-            return View();
+            student stu = (from a in db.student where a.id == id select a).FirstOrDefault();
+
+            //班级列表下拉框
+            IEnumerable<SelectListItem> listItem = from c in db.@class 
+                                                where c.id != null 
+                                                select new SelectListItem { Value = c.id.ToString(), Text = c.name, Selected=
+                                                (c.sxc.FirstOrDefault().student_id == stu.id ? true : false)
+
+                                                //(stu.sxc.FirstOrDefault().class_id == c.id ? true : false)
+                                                //这才是正确的下拉框设置, 但是会报错, ?
+
+                                                    };
+                                                
+            ViewBag.classList = listItem;
+            return View(stu);
         }
 
         //
         // POST: /Home/Modify/5
 
         [HttpPost]
-        public ActionResult Modify(int id, FormCollection collection)
+        public ActionResult Modify(student model)
         {
+            //将实体装入EF对象容器
+            DbEntityEntry<student> entry = db.Entry<student>(model);
+            entry.State = EntityState.Unchanged;
+
+            //设置被修改属性
+            entry.Property(a => a.name).IsModified = true;
+            entry.Property(a => a.dob).IsModified = true;
+//            entry.Collection(a => a.sxc).IsLoaded = true;
+
+            sxc ss = (from a in db.sxc where a.student_id == model.id select a).FirstOrDefault();
+            db.sxc.Attach(ss);
+            db.sxc.Remove(ss);
+            db.sxc.Add(new sxc { student_id = (model.id), class_id =int.Parse(Request.Form["class"]) });
+            
             try
             {
-                // TODO: Add update logic here
-
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Content("Modify failed. " + ex.Message);
             }
         }
 

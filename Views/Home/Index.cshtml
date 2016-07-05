@@ -11,6 +11,7 @@
 
 <html>
 <head>
+    <title>Index</title>
     <script type="text/javascript">
         function del(id) {
             if (confirm("Are you sure to delete?")) {
@@ -38,23 +39,28 @@
     <tr>
         <th>id</th>
         <th>name</th>
-        <th>dob</th>
+        <th>date of birth</th>
         <th>class</th>
         <th>action</th>
     </tr>
     @foreach (student stu in ViewData["DataList"] as List<student>)
-{
+    {
         <tr>
             <td>@stu.id</td>
             <td>@stu.name</td>
-            <td>@stu.dob</td>
-            <td>@stu.sxc.Select(r => r.@class.name).ToList()[0]</td>
+            <td>@stu.dob.ToString().Split(' ')[0]</td>
+            <td>@(stu.sxc.FirstOrDefault().@class.name)</td>
             <td>
                 <a href="javascript:del(@stu.id)">delete</a>
                 <a href="/home/modify/@stu.id">modify</a>
             </td>
         </tr>
-}
+    }
+    <tr>
+            <td colspan="5">
+                @Html.ActionLink("Add student","Create","Home")
+            </td>
+        </tr>
 
 </table>
 </body>

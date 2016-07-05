@@ -39,4 +39,4 @@ c:\users\yangyiru\documents\visual studio 2012\Projects\MvcApplication1\MvcAppli
 c:\users\yangyiru\documents\visual studio 2012\Projects\MvcApplication1\MvcApplication1\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
 c:\users\yangyiru\documents\visual studio 2012\Projects\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.dll
 c:\users\yangyiru\documents\visual studio 2012\Projects\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.pdb
-C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
+C:\Users\yangyiru\documents\visual studio 2012\Projects\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
