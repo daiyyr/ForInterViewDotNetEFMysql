@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -45,6 +46,51 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult Create(student model)
         {
+            if (string.IsNullOrEmpty(model.name))
+            {
+                ModelState.AddModelError("name", "please type in a name");
+            }
+            if (string.IsNullOrEmpty(Request.Form["dob"]))
+            {
+                ModelState.AddModelError("date of birth", "please type in a valid date");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                //返回前先处理下拉框
+                IEnumerable<SelectListItem> listItem = from c in db.@class
+                                                       where c.id != null
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = c.id.ToString(),
+                                                           Text = c.name,
+                                                       };
+
+                ViewBag.classList = listItem;
+                return View(model);
+            }
+
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            try
+            {
+                model.dob = Convert.ToDateTime(Request.Form["dob"], dtFormat);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("date of birth", "please type in a valid date");
+                //返回前先处理下拉框
+                IEnumerable<SelectListItem> listItem = from c in db.@class
+                                                       where c.id != null
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = c.id.ToString(),
+                                                           Text = c.name,
+                                                       };
+
+                ViewBag.classList = listItem;
+                return View(model);
+            }
 
             db.student.Add(model);
             try
@@ -98,6 +144,74 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult Modify(student model)
         {
+            if (string.IsNullOrEmpty(model.name))
+            {
+                ModelState.AddModelError("name", "please type in a name");
+            }
+            if (string.IsNullOrEmpty(Request.Form["dob"]))
+            {
+                ModelState.AddModelError("date of birth", "please type in a valid date");
+
+                //找回原来的生日:
+                student stu = (from a in db.student where a.id == model.id select a).FirstOrDefault();
+                model.dob = stu.dob;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                //返回前先处理下拉框
+                IEnumerable<SelectListItem> listItem = from c in db.@class
+                                                       where c.id != null
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = c.id.ToString(),
+                                                           Text = c.name,
+                                                           Selected =
+                                                               (c.sxc.FirstOrDefault().student_id == model.id ? true : false)
+
+                                                           //(stu.sxc.FirstOrDefault().class_id == c.id ? true : false)
+                                                           //这才是正确的下拉框设置, 但是会报错, ?
+
+                                                       };
+
+                ViewBag.classList = listItem;
+                return View(model);
+            }
+            
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            try
+            {
+                model.dob = Convert.ToDateTime(Request.Form["dob"], dtFormat);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("date of birth", "please type in a valid date");
+
+                //找回原来的生日:
+                student stu = (from a in db.student where a.id == model.id select a).FirstOrDefault();
+                model.dob = stu.dob;
+
+                //返回前先处理下拉框
+                IEnumerable<SelectListItem> listItem = from c in db.@class
+                                                       where c.id != null
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = c.id.ToString(),
+                                                           Text = c.name,
+                                                           Selected =
+                                                               (c.sxc.FirstOrDefault().student_id == model.id ? true : false)
+
+                                                           //(stu.sxc.FirstOrDefault().class_id == c.id ? true : false)
+                                                           //这才是正确的下拉框设置, 但是会报错, ?
+                                                       };
+
+                ViewBag.classList = listItem;
+                return View(model);
+            }
+
+            
+
             //将实体装入EF对象容器
             DbEntityEntry<student> entry = db.Entry<student>(model);
             entry.State = EntityState.Unchanged;

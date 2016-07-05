@@ -6,6 +6,7 @@
 //    如果重新生成代码，则将覆盖对此文件的手动更改。
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcApplication1.Models
 {
@@ -18,9 +19,12 @@ namespace MvcApplication1.Models
         {
             this.sxc = new HashSet<sxc>();
         }
-    
+
         public int id { get; set; }
+
+        [Required]
         public string name { get; set; }
+
         public string description { get; set; }
     
         public virtual ICollection<sxc> sxc { get; set; }

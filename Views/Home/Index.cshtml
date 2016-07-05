@@ -51,8 +51,8 @@
             <td>@stu.dob.ToString().Split(' ')[0]</td>
             <td>@(stu.sxc.FirstOrDefault().@class.name)</td>
             <td>
-                <a href="javascript:del(@stu.id)">delete</a>
                 <a href="/home/modify/@stu.id">modify</a>
+                <a href="javascript:del(@stu.id)">delete</a>
             </td>
         </tr>
     }
