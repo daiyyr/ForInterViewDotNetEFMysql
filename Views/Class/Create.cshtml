@@ -1,0 +1,51 @@
+﻿@model MvcApplication1.Models.@class
+
+<h2 style="text-align:center">Add class</h2>
+<html>
+<head>
+    <title>Create</title>
+    <style type="text/css">
+        #tblist {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tblist th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+                text-align:center;
+            }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Create", "Class", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken() 
+        @Html.ValidationSummary()
+        <table id="tblist">
+            <tr>
+                <th>name @Html.HiddenFor(a => a.id)</th>
+                @*<td>@Html.TextBox("name",(Object)Model.name)</td>*@
+                <td>
+                    @Html.TextBoxFor(a=>a.name)
+                    @Html.ValidationMessageFor(a=>a.name)
+                </td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>
+                    @Html.TextAreaFor(a=>a.description, 10, 60, null)
+                    @Html.ValidationMessageFor(a=>a.description)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="submit" onclick="this.disabled = true;document.forms[0].submit()" /> @Html.ActionLink("back","Index","Class")
+                </td>
+            </tr>
+        </table>
+    }
+</body>
+</html>

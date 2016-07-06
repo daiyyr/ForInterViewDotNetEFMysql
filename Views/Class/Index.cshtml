@@ -1,0 +1,65 @@
+﻿@using MvcApplication1.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align:center">class</h2>
+
+<!--Razor引擎-->
+@Html.Raw(ViewBag.htmlStr)
+
+<html>
+<head>
+    <title>Index</title>
+    <script type="text/javascript">
+        function del(id) {
+            if (confirm("Are you sure to delete?")) {
+                window.location = "/class/del/" + id;
+            }
+        }
+    </script>
+    <style type="text/css">
+        #tblist {
+            border: 1px solid #0094ff;
+            width: 800px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tblist th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+                text-align:center;
+            }
+    </style>
+</head>
+<body>
+<table id="tblist">
+    <tr>
+        <th>id</th>
+        <th style="width:150px;">name</th>
+        <th style="width:400px;">description</th>
+        <th>action</th>
+    </tr>
+    @foreach (@class cla in ViewData["DataList"] as List<@class>)
+    {
+        <tr>
+            <td>@cla.id</td>
+            <td>@cla.name</td>
+            <td>@cla.description</td>
+            <td>
+                <a href="/class/modify/@cla.id">modify</a>
+                <a href="javascript:del(@cla.id)">delete</a>
+            </td>
+        </tr>
+    }
+    <tr>
+            <td colspan="4">
+                @Html.ActionLink("Add class","Create","Class") &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp @Html.ActionLink("Back to student","Index","Student")
+            </td>
+        </tr>
+
+</table>
+</body>
+</html>

@@ -25,6 +25,7 @@ namespace MvcApplication1.Models
         [Required]
         public string name { get; set; }
 
+        [Required]
         public string description { get; set; }
     
         public virtual ICollection<sxc> sxc { get; set; }

@@ -15,7 +15,7 @@
     <script type="text/javascript">
         function del(id) {
             if (confirm("Are you sure to delete?")) {
-                window.location = "/home/del/" + id;
+                window.location = "/student/del/" + id;
             }
         }
     </script>
@@ -40,7 +40,7 @@
         <th>id</th>
         <th>name</th>
         <th>date of birth</th>
-        <th>class</th>
+        <th><a href="/class/index">class</a></th>
         <th>action</th>
     </tr>
     @foreach (student stu in ViewData["DataList"] as List<student>)
@@ -51,14 +51,14 @@
             <td>@stu.dob.ToString().Split(' ')[0]</td>
             <td>@(stu.sxc.FirstOrDefault().@class.name)</td>
             <td>
-                <a href="/home/modify/@stu.id">modify</a>
+                <a href="/student/modify/@stu.id">modify</a>
                 <a href="javascript:del(@stu.id)">delete</a>
             </td>
         </tr>
     }
     <tr>
             <td colspan="5">
-                @Html.ActionLink("Add student","Create","Home")
+                @Html.ActionLink("Add student","Create","Student") &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp @Html.ActionLink("See classes","Index","Class")
             </td>
         </tr>
 

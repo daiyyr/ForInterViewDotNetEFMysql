@@ -10,7 +10,7 @@ using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
-    public class HomeController : Controller
+    public class StudentController : Controller
     {
         testdbEntities db = new testdbEntities();
         public ActionResult Index()
