@@ -1,10 +1,10 @@
 ﻿@using MvcApplication1.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Repot";
 }
 
-<h2 style="text-align:center">Student</h2>
+<h2 style="text-align:center">Student Report</h2>
 
 <!--Razor引擎-->
 @Html.Raw(ViewBag.htmlStr)
@@ -22,7 +22,7 @@
     <style type="text/css">
         #tblist {
             border: 1px solid #0094ff;
-            width: 600px;
+            width: 1600px;
             margin: 10px auto;
             border-collapse: collapse;
         }
@@ -40,8 +40,8 @@
         <th>id</th>
         <th>name</th>
         <th>date of birth</th>
-        <th><a href="/class/index">class</a></th>
-        <th>action</th>
+        <th>class name</th>
+        <th>class description</th>
     </tr>
     @foreach (student stu in ViewData["DataList"] as List<student>)
     {
@@ -51,17 +51,13 @@
             <td>@stu.dob.ToString().Split(' ')[0]</td>
             <td>@(stu.sxc.FirstOrDefault().@class.name)</td>
             <td>
-                <a href="/student/modify/@stu.id">modify</a>
-                <a href="javascript:del(@stu.id)">delete</a>
+                @(stu.sxc.FirstOrDefault().@class.description)
             </td>
         </tr>
     }
     <tr>
             <td colspan="5">
-                @Html.ActionLink("Add student","Create","Student") &nbsp&nbsp&nbsp @Html.ActionLink("See classes","Index","Class")
-                &nbsp&nbsp&nbsp @Html.ActionLink("Report","Report","Student")
-                &nbsp&nbsp&nbsp @Html.ActionLink("Login","Login","Account")
-                
+                @Html.ActionLink("Back","Index","Student") 
             </td>
         </tr>
 

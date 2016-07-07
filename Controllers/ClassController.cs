@@ -129,5 +129,13 @@ namespace MvcApplication1.Controllers
             }
         }
 
+        public ActionResult Report()
+        {
+            List<Models.@class> list = (from d in db.@class where d.id != null select d).ToList();
+
+            ViewData["DataList"] = list;
+            
+            return View();
+        }
     }
 }

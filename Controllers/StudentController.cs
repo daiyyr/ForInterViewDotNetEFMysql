@@ -264,5 +264,12 @@ namespace MvcApplication1.Controllers
             }
         }
 
+        public ActionResult Report()
+        {
+            List<Models.student> list = (from d in db.student where d.id != null select d).ToList();
+
+            ViewData["DataList"] = list;
+            return View();
+        }
     }
 }
