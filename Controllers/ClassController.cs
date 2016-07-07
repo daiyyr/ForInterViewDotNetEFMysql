@@ -22,6 +22,7 @@ namespace MvcApplication1.Controllers
         }
 
 
+        [Authorize(Roles = "user_add")]
         public ActionResult Create()
         {
             @class cla = new @class();
@@ -31,6 +32,7 @@ namespace MvcApplication1.Controllers
         //
         // POST: /Home/Create
 
+        [Authorize(Roles = "user_add")]
         [HttpPost]
         public ActionResult Create(@class model)
         {
@@ -60,7 +62,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "admin_edit")]
         [HttpGet]
         public ActionResult Modify(int id)
         {
@@ -68,7 +70,7 @@ namespace MvcApplication1.Controllers
             return View(cla);
         }
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "admin_edit")]
         [HttpPost]
         public ActionResult Modify(@class model)
         {
@@ -108,7 +110,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "superAdmin_delete")]
         public ActionResult Del(int id)
         {
             sxc ss = (from a in db.sxc where a.class_id == id select a).FirstOrDefault();

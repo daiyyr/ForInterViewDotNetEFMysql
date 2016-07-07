@@ -24,7 +24,7 @@ namespace MvcApplication1.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = "user_add")]
         public ActionResult Create()
         {
             student stu = new student();
@@ -41,7 +41,7 @@ namespace MvcApplication1.Controllers
 
         //
         // POST: /Home/Create
-
+        [Authorize(Roles = "user_add")]
         [HttpPost]
         public ActionResult Create(student model)
         {
@@ -120,7 +120,7 @@ namespace MvcApplication1.Controllers
         }
 
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "admin_edit")]
         [HttpGet]
         public ActionResult Modify(int id)
         {
@@ -143,7 +143,7 @@ namespace MvcApplication1.Controllers
 
         
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "admin_edit")]
         [HttpPost]
         public ActionResult Modify(student model)
         {
@@ -240,7 +240,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        [Authorize(Users = "admin@qq.com")]
+        [Authorize(Roles = "superAdmin_delete")]
         public ActionResult Del(int id)
         {
             

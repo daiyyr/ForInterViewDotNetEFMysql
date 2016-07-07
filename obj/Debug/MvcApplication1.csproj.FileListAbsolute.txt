@@ -136,4 +136,3 @@ C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1我的代
 C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1我的代码中加入简化的登录模块\MvcApplication1\bin\WebGrease.dll
 C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1我的代码中加入简化的登录模块\MvcApplication1\bin\Antlr3.Runtime.pdb
 C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1我的代码中加入简化的登录模块\MvcApplication1\bin\System.Web.Optimization.xml
-C:\Users\yangyiru\Documents\Visual Studio 2012\Projects\MvcApplication1我的代码中加入简化的登录模块\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
