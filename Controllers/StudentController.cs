@@ -15,7 +15,6 @@ namespace MvcApplication1.Controllers
         testdbEntities db = new testdbEntities();
         public ActionResult Index()
         {
-
             //DbQuery<student> query =  (db.student.Where(d=> d.id != null)) as DbQuery<student>;
             //List<Models.student> list = db.student.Where(d => d.id != null).ToList();
 
@@ -53,6 +52,10 @@ namespace MvcApplication1.Controllers
             if (string.IsNullOrEmpty(Request.Form["dob"]))
             {
                 ModelState.AddModelError("date of birth", "please type in a valid date");
+            }
+            if (string.IsNullOrEmpty(Request.Form["class"]))
+            {
+                ModelState.AddModelError("class", "please choose a class");
             }
 
             if (!ModelState.IsValid)
