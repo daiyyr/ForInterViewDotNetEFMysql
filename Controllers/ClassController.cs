@@ -60,8 +60,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        //
-        // GET: /Home/Modify/5
+        [Authorize(Users = "admin@qq.com")]
         [HttpGet]
         public ActionResult Modify(int id)
         {
@@ -69,9 +68,7 @@ namespace MvcApplication1.Controllers
             return View(cla);
         }
 
-        //
-        // POST: /Home/Modify/5
-
+        [Authorize(Users = "admin@qq.com")]
         [HttpPost]
         public ActionResult Modify(@class model)
         {
@@ -111,7 +108,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-
+        [Authorize(Users = "admin@qq.com")]
         public ActionResult Del(int id)
         {
             sxc ss = (from a in db.sxc where a.class_id == id select a).FirstOrDefault();

@@ -119,8 +119,8 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        //
-        // GET: /Home/Modify/5
+
+        [Authorize(Users = "admin@qq.com")]
         [HttpGet]
         public ActionResult Modify(int id)
         {
@@ -141,9 +141,9 @@ namespace MvcApplication1.Controllers
             return View(stu);
         }
 
-        //
-        // POST: /Home/Modify/5
+        
 
+        [Authorize(Users = "admin@qq.com")]
         [HttpPost]
         public ActionResult Modify(student model)
         {
@@ -240,7 +240,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
-
+        [Authorize(Users = "admin@qq.com")]
         public ActionResult Del(int id)
         {
             
